@@ -1,26 +1,28 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Data_models extends CI_Model {
+class Answer_model extends CI_Model {
 
     var $tableName, $tableId;
 
     function __construct(){
         parent::__construct();
-        $this->tableName  = "data";
-        $this->tableId    = "data_id";
+        $this->tableName  = "answer";
+        $this->tableId    = "answer_id";
 
     }
 
-    function create($data){
+    function create($data, $banyak=false){
         
-        if($data){
-            $query = $this->db->insert($this->tableName, $data);
-            return $query;
-
+        if($banyak){
+            $query = $this->db->insert_batch($this->tableName, $data);
+        }else{
+                $query = $this->db->insert($this->tableName, $data);
         }
         
-    }
+        return $query;
+
+     }
 
     function get($id="",$field=""){
 
@@ -42,10 +44,10 @@ class Data_models extends CI_Model {
         return $query->result_array();
     }
 
-    function update($data,$id){
-        if($data){
-            $this->db->where($this->tableId,$id);
-            $query = $this->db->update($this->tableName, $data);
+    function update($answer,$answer_id){
+        if($answer){
+            $this->db->where($this->answer_Id,$id);
+            $query = $this->db->update($this->tableName, $answer);
             return $query;
 
         }
